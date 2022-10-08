@@ -30,4 +30,8 @@ public class PersonDetailsService implements UserDetailsService {
 
         return new PersonDetails(person.get());
     }
+
+    public Optional<Person> getUserByUsername(String username){
+        return peopleRepository.findByUsername(username);
+    }
 }
