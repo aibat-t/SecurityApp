@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "person")
@@ -25,6 +26,9 @@ public class Person {
 
     @Column(name="password")
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<GrantAccess> grantAccessList;
 
     public Person() {
     }
@@ -64,6 +68,14 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<GrantAccess> getGrantAccessList() {
+        return grantAccessList;
+    }
+
+    public void setGrantAccessList(List<GrantAccess> grantAccessList) {
+        this.grantAccessList = grantAccessList;
     }
 
     @Override

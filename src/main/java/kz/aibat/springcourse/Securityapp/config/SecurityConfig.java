@@ -31,18 +31,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/auth/login", "/auth/registration", "/error").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .loginPage("/auth/login")
-            .loginProcessingUrl("/process_login")
-            .defaultSuccessUrl("/hello", true)
-            .failureUrl("/auth/login?error")
-            .and()
-            .logout()
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/auth/login");
+        http.authorizeRequests()
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/auth/login", "/auth/registration", "/error").permitAll()
+                .anyRequest().hasAnyRole("USER","ADMIN")
+                .and()
+                .formLogin()
+                .loginPage("/auth/login")
+                .loginProcessingUrl("/process_login")
+                .defaultSuccessUrl("/hello", true)
+                .failureUrl("/auth/login?error")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/auth/login");
 
         return http.build();
     }
